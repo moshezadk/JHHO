@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="he">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="חיים צייג - אימון אישי והורות מתקדמת">
-    <title>חיים צייג - אימון אישי והורות</title>
+    <title>חיים צייג - אימון אישי והורות מתקדמת</title>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #2563eb;
@@ -967,11 +967,70 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: var(--transition);
-            padding: 1.5rem;
+            position: relative;
         }
 
         .podcast-episode:hover {
             transform: translateY(-5px);
+        }
+
+        .episode-thumbnail {
+            position: relative;
+            padding-bottom: 56.25%;
+            background: var(--primary-color);
+            overflow: hidden;
+        }
+
+        .episode-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .podcast-episode:hover .episode-thumbnail img {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 1;
+        }
+
+        .play-button::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 12px 0 12px 20px;
+            border-color: transparent transparent transparent var(--primary-color);
+            margin-left: 5px;
+        }
+
+        .play-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .episode-content {
+            padding: 1.5rem;
         }
 
         .episode-number {
@@ -988,28 +1047,378 @@
 
         .episode-description {
             color: #666;
-            margin-bottom: 1.5rem;
             line-height: 1.6;
+            margin-bottom: 1rem;
         }
 
-        .episode-player {
-            width: 100%;
-            height: 50px;
-            border-radius: 25px;
-            overflow: hidden;
+        .episode-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #666;
+            font-size: 0.9rem;
         }
 
-        /* Basic Accessibility */
-        *:focus {
-            outline: 3px solid var(--primary-color);
-            outline-offset: 2px;
+        .episode-duration {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
+        .episode-duration::before {
+            content: '🎧';
+        }
+
+        .episode-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .episode-date::before {
+            content: '📅';
+        }
+
+        /* Cookie Notice */
+        .cookie-notice {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .cookie-notice.show {
+            transform: translateY(0);
+        }
+
+        .cookie-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cookie-text {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .cookie-button {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .accept-cookies {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .accept-cookies:hover {
+            background: var(--text-color);
+        }
+
+        .reject-cookies {
+            background: transparent;
+            border: 1px solid #666;
+            color: #666;
+        }
+
+        .reject-cookies:hover {
+            background: #f5f5f5;
+        }
+
+        @media (max-width: 768px) {
+            .cookie-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
             }
+
+            .cookie-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Courses Section */
+        .courses {
+            padding: 6rem 0;
+            background: var(--section-bg);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .course-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .course-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .course-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        .course-features li::before {
+            content: '✓';
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: var(--section-bg);
+            border-top: 1px solid #eee;
+        }
+
+        .course-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .course-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .course-button:hover {
+            background: var(--text-color);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            left: 30px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--text-color);
+            transform: translateY(-3px);
+        }
+
+        .back-to-top::before {
+            content: '↑';
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* פאנל ניהול */
+        #adminPanel {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100%;
+            background-color: white;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+            transition: right 0.3s ease;
+            z-index: 10000;
+            padding: 20px;
+            direction: rtl;
+            overflow-y: auto;
+        }
+
+        #adminPanel.visible {
+            right: 0;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .admin-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #1f2937;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* כפתור ניהול נסתר */
+        #adminTrigger {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            cursor: default;
+            z-index: 9999;
+        }
+
+        /* עיצוב תפריט ניהול */
+        .admin-section {
+            margin-bottom: 20px;
+        }
+
+        .admin-section h3 {
+            color: #2563eb;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .admin-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f8fafc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .admin-menu-item:hover {
+            background: #f1f5f9;
+            transform: translateX(-5px);
+        }
+
+        .admin-menu-item i {
+            margin-left: 10px;
+            color: #2563eb;
+        }
+
+        .admin-button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .admin-button:hover {
+            background: #1d4ed8;
+        }
+
+        .admin-button.secondary {
+            background: #f1f5f9;
+            color: #1f2937;
+        }
+
+        .admin-button.secondary:hover {
+            background: #e2e8f0;
         }
     </style>
 </head>
@@ -1190,82 +1599,6 @@
         </div>
     </section>
 
-    <section class="videos">
-        <div class="container">
-            <div class="section-title">
-                <h2>צפו בתכנים שלנו</h2>
-                <p>סרטונים והרצאות בנושאי הורות ואימון אישי</p>
-            </div>
-            <div class="video-grid">
-                <div class="video-card fade-in-up delay-1">
-                    <div class="video-thumbnail">
-                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="טיפים להורות מיטבית" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div class="video-content">
-                        <h3>טיפים להורות מיטבית</h3>
-                        <p>צפו בהרצאה מרתקת על הדרך להורות מיטבית ויחסים טובים יותר עם הילדים</p>
-                    </div>
-                </div>
-                <div class="video-card fade-in-up delay-2">
-                    <div class="video-thumbnail">
-                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="התמודדות עם אתגרי גיל ההתבגרות" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div class="video-content">
-                        <h3>התמודדות עם אתגרי גיל ההתבגרות</h3>
-                        <p>למדו כלים פרקטיים להתמודדות עם האתגרים המיוחדים של גיל ההתבגרות</p>
-                    </div>
-                </div>
-                <div class="video-card fade-in-up delay-3">
-                    <div class="video-thumbnail">
-                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="בניית ביטחון עצמי" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div class="video-content">
-                        <h3>בניית ביטחון עצמי</h3>
-                        <p>גלו את הסודות לבניית ביטחון עצמי חזק ויודע מה אני רוצה להשיג.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="blog">
-        <div class="container">
-            <div class="section-title">
-                <h2>המאמרים שלנו</h2>
-                <p>תוכן מקצועי בנושאי הורות, חינוך והתפתחות אישית</p>
-            </div>
-            <div class="blog-grid">
-                <article class="blog-card fade-in-up delay-1">
-                    <img src="להורים.jpg" alt="איך לתקשר נכון עם ילדים" class="blog-image">
-                    <div class="blog-content">
-                        <div class="blog-date">15 בינואר 2024</div>
-                        <h3 class="blog-title">איך לתקשר נכון עם ילדים</h3>
-                        <p class="blog-excerpt">גלו את הסודות לתקשורת אפקטיבית עם ילדים, שתוביל להבנה הדדית ויחסים טובים יותר.</p>
-                        <a href="#" class="blog-link">קראו עוד ←</a>
-                    </div>
-                </article>
-                <article class="blog-card fade-in-up delay-2">
-                    <img src="לבחורים.jpg" alt="בניית ביטחון עצמי" class="blog-image">
-                    <div class="blog-content">
-                        <div class="blog-date">10 בינואר 2024</div>
-                        <h3 class="blog-title">5 צעדים לבניית ביטחון עצמי</h3>
-                        <p class="blog-excerpt">מדריך מעשי לבניית ביטחון עצמי יציב, שיעזור לכם להצליח בכל תחומי החיים.</p>
-                        <a href="#" class="blog-link">קראו עוד ←</a>
-                    </div>
-                </article>
-                <article class="blog-card fade-in-up delay-3">
-                    <img src="כללי 1.jpg" alt="התמודדות עם אתגרי החיים" class="blog-image">
-                    <div class="blog-content">
-                        <div class="blog-date">5 בינואר 2024</div>
-                        <h3 class="blog-title">התמודדות עם אתגרי החיים</h3>
-                        <p class="blog-excerpt">כלים פרקטיים להתמודדות עם אתגרים ומשברים, והפיכתם להזדמנויות לצמיחה.</p>
-                        <a href="#" class="blog-link">קראו עוד ←</a>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
     <section class="podcast">
         <div class="container">
             <div class="section-title">
@@ -1273,90 +1606,56 @@
                 <p>שיחות מרתקות על הורות, חינוך והתפתחות אישית</p>
             </div>
             <div class="podcast-grid">
-                <article class="podcast-episode">
-                    <div class="episode-number">פרק 1</div>
-                    <h3 class="episode-title">איך לבנות תקשורת טובה יותר עם הילדים</h3>
-                    <p class="episode-description">בפרק זה נדבר על הדרכים ליצירת תקשורת פתוחה ואפקטיבית עם הילדים, ונלמד טכניקות מעשיות לשיפור היחסים במשפחה.</p>
-                    <iframe class="episode-player" src="https://open.spotify.com/embed/episode/EPISODE_ID_1" title="פרק 1: תקשורת עם ילדים" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-                </article>
-                <article class="podcast-episode">
-                    <div class="episode-number">פרק 2</div>
-                    <h3 class="episode-title">התמודדות עם אתגרי גיל ההתבגרות</h3>
-                    <p class="episode-description">שיחה מעמיקה על האתגרים הייחודיים של גיל ההתבגרות, וכיצד הורים יכולים לתמוך בילדיהם בתקופה מאתגרת זו.</p>
-                    <iframe class="episode-player" src="https://open.spotify.com/embed/episode/EPISODE_ID_2" title="פרק 2: אתגרי גיל ההתבגרות" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-                </article>
-                <article class="podcast-episode">
-                    <div class="episode-number">פרק 3</div>
-                    <h3 class="episode-title">בניית ביטחון עצמי בקרב ילדים</h3>
-                    <p class="episode-description">גלו כיצד לטפח ביטחון עצמי בריא אצל ילדיכם, ואיך לעזור להם להתמודד עם אתגרים בדרך חיובית ובונה.</p>
-                    <iframe class="episode-player" src="https://open.spotify.com/embed/episode/EPISODE_ID_3" title="פרק 3: בניית ביטחון עצמי" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-                </article>
+                <div class="podcast-episode fade-in-up delay-1">
+                    <div class="episode-thumbnail">
+                        <img src="להורים.jpg" alt="פרק 1: סודות ההורות המיטבית">
+                        <div class="play-button"></div>
+                    </div>
+                    <div class="episode-content">
+                        <div class="episode-number">פרק 1</div>
+                        <h3 class="episode-title">סודות ההורות המיטבית</h3>
+                        <p class="episode-description">בפרק זה נדבר על הדרכים ליצירת קשר משמעותי עם הילדים ובניית יחסי אמון.</p>
+                        <div class="episode-meta">
+                            <span class="episode-duration">45 דקות</span>
+                            <span class="episode-date">15.01.2024</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="podcast-episode fade-in-up delay-2">
+                    <div class="episode-thumbnail">
+                        <img src="לבחורים.jpg" alt="פרק 2: בניית ביטחון עצמי">
+                        <div class="play-button"></div>
+                    </div>
+                    <div class="episode-content">
+                        <div class="episode-number">פרק 2</div>
+                        <h3 class="episode-title">בניית ביטחון עצמי</h3>
+                        <p class="episode-description">איך בונים ביטחון עצמי אמיתי ויציב? בפרק זה נחשוף את הכלים המעשיים.</p>
+                        <div class="episode-meta">
+                            <span class="episode-duration">38 דקות</span>
+                            <span class="episode-date">10.01.2024</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="podcast-episode fade-in-up delay-3">
+                    <div class="episode-thumbnail">
+                        <img src="כללי 1.jpg" alt="פרק 3: התמודדות עם אתגרים">
+                        <div class="play-button"></div>
+                    </div>
+                    <div class="episode-content">
+                        <div class="episode-number">פרק 3</div>
+                        <h3 class="episode-title">התמודדות עם אתגרים</h3>
+                        <p class="episode-description">כלים מעשיים להתמודדות עם אתגרי החיים והפיכת משברים להזדמנויות.</p>
+                        <div class="episode-meta">
+                            <span class="episode-duration">42 דקות</span>
+                            <span class="episode-date">05.01.2024</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="newsletter">
-        <div class="container">
-            <div class="newsletter-content">
-                <h2>הצטרפו לניוזלטר שלנו</h2>
-                <p>קבלו טיפים, מאמרים והשראה ישירות לתיבת המייל</p>
-                <form class="newsletter-form" id="newsletterForm">
-                    <input type="email" class="newsletter-input" placeholder="הכניסו את כתובת המייל שלכם" required>
-                    <button type="submit" class="newsletter-button">
-                        <span class="loading"></span>
-                        הרשמה לניוזלטר
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <section class="faq">
-        <div class="container">
-            <div class="section-title">
-                <h2>שאלות נפוצות</h2>
-                <p>תשובות לשאלות שעולות בתהליך האימון</p>
-            </div>
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>כמה זמן נמשך תהליך האימון?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>תהליך האימון מותאם אישית לכל מתאמן. בדרך כלל מדובר בתקופה של 3-6 חודשים, עם מפגש שבועי של כשעה. אנחנו נתאים את התהליך לקצב ולצרכים שלך.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>איך מתבצעים המפגשים?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>המפגשים יכולים להתקיים פנים אל פנים או בשיחת וידאו, לפי בחירתך. אני מציע גמישות מלאה כדי להתאים לסדר היום שלך.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>האם יש ליווי בין המפגשים?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>כן! אני זמין לשאלות ותמיכה דרך וואטסאפ בין המפגשים. בנוסף, תקבלו משימות ותרגילים שיעזרו לכם להתקדם.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>מה כולל המפגש הראשון?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>המפגש הראשון הוא פגישת היכרות ללא עלות. נדבר על המטרות שלך, נבין את האתגרים ונבנה יחד תכנית פעולה מותאמת אישית.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <a href="#" class="back-to-top" id="backToTop" aria-label="חזרה לראש העמוד"></a>
 
     <section id="contact" class="contact">
         <div class="container">
@@ -1418,86 +1717,121 @@
         <img src="whatsapp-icon.svg" alt="צור קשר בווצאפ">
     </a>
 
+    <div class="cookie-notice" id="cookieNotice">
+        <div class="cookie-content">
+            <p class="cookie-text">אנו משתמשים בעוגיות כדי לשפר את חווית הגלישה שלך. המשך הגלישה באתר מהווה הסכמה למדיניות העוגיות שלנו.</p>
+            <div class="cookie-buttons">
+                <button class="cookie-button accept-cookies" id="acceptCookies">אישור</button>
+                <button class="cookie-button reject-cookies" id="rejectCookies">לא מאשר</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- פאנל ניהול -->
+    <div id="adminPanel">
+        <div class="admin-header">
+            <h2>ניהול האתר</h2>
+            <button onclick="closeAdminPanel()" class="close-button">×</button>
+        </div>
+        <div class="admin-content">
+            <!-- ניהול בלוג -->
+            <div class="admin-section">
+                <h3>ניהול בלוג</h3>
+                <button class="admin-button" onclick="openEditor('blog')">כתיבת פוסט חדש</button>
+                <div class="admin-menu-item" onclick="openManager('posts')">
+                    <i>📝</i>
+                    ניהול פוסטים קיימים
+                </div>
+            </div>
+
+            <!-- ניהול המלצות -->
+            <div class="admin-section">
+                <h3>ניהול המלצות</h3>
+                <button class="admin-button" onclick="openEditor('testimonial')">הוספת המלצה חדשה</button>
+                <div class="admin-menu-item" onclick="openManager('testimonials')">
+                    <i>⭐</i>
+                    ניהול המלצות קיימות
+                </div>
+            </div>
+
+            <!-- ניהול פודקאסט -->
+            <div class="admin-section">
+                <h3>ניהול פודקאסט</h3>
+                <button class="admin-button" onclick="openEditor('podcast')">העלאת פרק חדש</button>
+                <div class="admin-menu-item" onclick="openManager('podcasts')">
+                    <i>🎙️</i>
+                    ניהול פרקים קיימים
+                </div>
+            </div>
+
+            <!-- ניהול קורסים -->
+            <div class="admin-section">
+                <h3>ניהול קורסים</h3>
+                <button class="admin-button" onclick="openEditor('course')">יצירת קורס חדש</button>
+                <div class="admin-menu-item" onclick="openManager('courses')">
+                    <i>📚</i>
+                    ניהול קורסים קיימים
+                </div>
+            </div>
+
+            <!-- ספריית מדיה -->
+            <div class="admin-section">
+                <h3>ספריית מדיה</h3>
+                <button class="admin-button" onclick="openMediaUpload()">העלאת קבצים</button>
+                <div class="admin-menu-item" onclick="openManager('media')">
+                    <i>🖼️</i>
+                    ניהול קבצים קיימים
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- כפתור ניהול נסתר -->
+    <div id="adminTrigger"></div>
+
     <script>
-        // Header Scroll Effect
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('.header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+        // הגדרת משתנים גלובליים
+        const ADMIN_PASSWORD = '1234';
+        
+        // פונקציות ניהול
+        function showAdminPrompt() {
+            const password = prompt('הכנס סיסמה:');
+            if (password === ADMIN_PASSWORD) {
+                const panel = document.getElementById('adminPanel');
+                if (panel) {
+                    panel.classList.add('visible');
+                }
+            } else if (password !== null) {
+                alert('סיסמה שגויה');
             }
-        });
+        }
 
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const headerOffset = 80;
-                    const elementPosition = target.offsetTop;
-                    const offsetPosition = elementPosition - headerOffset;
+        function closeAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            if (panel) {
+                panel.classList.remove('visible');
+            }
+        }
 
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+        // פונקציות ניהול תוכן
+        function openEditor(type) {
+            alert('עורך התוכן יהיה זמין בקרוב! סוג תוכן: ' + type);
+        }
 
-        // Contact Form Handler
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('תודה על פנייתך! נחזור אליך בהקדם.');
-            this.reset();
-        });
+        function openManager(type) {
+            alert('מנהל התוכן יהיה זמין בקרוב! סוג תוכן: ' + type);
+        }
 
-        // FAQ Functionality
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                faqItem.classList.toggle('active');
-            });
-        });
+        function openMediaUpload() {
+            alert('העלאת קבצים תהיה זמינה בקרוב!');
+        }
 
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.2,
-            rootMargin: '0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in-up').forEach(element => {
-            observer.observe(element);
-        });
-
-        // Newsletter Form Handling
-        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const button = this.querySelector('button');
-            const loading = button.querySelector('.loading');
-            const email = this.querySelector('input[type="email"]').value;
-
-            loading.classList.add('active');
-            button.disabled = true;
-
-            // Simulate API call
-            setTimeout(() => {
-                loading.classList.remove('active');
-                button.disabled = false;
-                alert('תודה על ההרשמה! המייל הראשון בדרך אליך 📧');
-                this.reset();
-            }, 1500);
+        // הוספת אירוע דאבל קליק לכפתור הנסתר
+        document.addEventListener('DOMContentLoaded', function() {
+            const trigger = document.getElementById('adminTrigger');
+            if (trigger) {
+                trigger.addEventListener('dblclick', showAdminPrompt);
+            }
         });
     </script>
 </body>
